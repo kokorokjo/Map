@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>map.qml</file>
+        <file>markers.qml</file>
+        <file>Armored-Track-Unit_MGRS-Mapper.svg</file>
+        <file>Infantry_MGRS-Mapper.svg</file>
+    </qresource>
+</RCC>
