@@ -2,6 +2,8 @@ QT       += core gui
 QT += quickwidgets
 QT +=qml
 QT +=svg
+QT += core quick quickcontrols2 location
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,8 +18,7 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    mainwindow.h \
-    svgItems.h
+    mainwindow.h
 
 FORMS += \
     mainwindow.ui

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "svgItems.h"
 
 #include <QUrl>
 #include <QQuickWidget>
@@ -11,6 +10,18 @@
 #include <QQmlEngine>
 #include <QQmlComponent>
 #include <QQmlProperties>
+
+#include <QApplication>
+#include <QQuickView>
+#include <QQmlContext>
+#include <QQuickItem>
+#include <QQmlComponent>
+#include <QtPositioning/QGeoCoordinate>
+
+QStringList symbols ={"Assumed Friendly","Assumed Hostile","Unknown","Neutral"};
+QStringList iconPaths = {":/Infantry_MGRS-Mapper.svg",":/Armored-Track-Unit_MGRS-Mapper.svg",":/Information-Operations_MGRS-Mapper.svg",":/Interpreter_Translator_MGRS-Mapper.svg"};
+
+QPoint nieco;
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -24,14 +35,18 @@ MainWindow::MainWindow(QWidget *parent)
     //map
     ui->quickWidget->setSource(QUrl(QStringLiteral("qrc:/map.qml")));
     ui->quickWidget->show();
-    //nieco
+
+    auto obj = ui->quickWidget->rootObject();
+    // connect(this,SIGNAL(setCenter(QVariant,QVariant)),obj,SLOT(setCenter(QVariant,QVariant)));
+    connect(this,SIGNAL(setMarker(QVariant,QVariant,QVariant)),obj,SLOT(setMarker(QVariant,QVariant,QVariant)));
+
+    // emit setCenter(48.149,17.108);
+
+
+    // qmenu
     contextMenu = new QMenu(this);
     completerLineEdit =new QLineEdit(this);
     completerLineEdit->hide();
-
-    QStringList symbols ={"nieco","niedo"};
-    QStringList iconPaths = {":/Armored-Track-Unit_MGRS-Mapper.svg",":/Infantry_MGRS-Mapper.svg"};
-
 
     model = new QStandardItemModel(this);
 
@@ -41,28 +56,22 @@ MainWindow::MainWindow(QWidget *parent)
         model->appendRow(QList<QStandardItem*>()<<col1<<col2);
     }
 
-    // model->setStringList(symbols);
-
-
-
     completer = new QCompleter(this);
     completer-> setModel(model);
-
-    // completer-> setCompletionMode(QCompleter::PopupCompletion);
-
-    // completerPopup = new QListView(this);
-    // completerPopup->setItemDelegate(new SvgItemDelegate(this));
-    // completer->setPopup(completerPopup);
+    completer-> setModelSorting(QCompleter::CaseSensitivelySortedModel);
+    completer-> setCaseSensitivity(Qt::CaseInsensitive);
+    completer-> setCompletionMode(QCompleter::PopupCompletion);
 
     completerLineEdit->setCompleter(completer);
 
+    connect(completer, QOverload<const QModelIndex &>::of(&QCompleter::activated),
+            this, &MainWindow::handleCompletion);
 
 
+    // uplne randomne
     QAction *chooseSymbolAction = new QAction("Choose Symbol", this);
     connect(chooseSymbolAction,&QAction::triggered, this, &MainWindow::showCompleter);
     contextMenu->addAction(chooseSymbolAction);
-
-
 }
 
 
@@ -93,6 +102,13 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
         // menu.exec(QCursor::pos());
         qInfo() << "C++ Style Info Message";
         qInfo() << event->pos();
+        nieco=event->pos();
+        // double y=nieco.y();
+        // double x=nieco.x();
+
+
+
+
 
     }
 
@@ -102,4 +118,13 @@ void MainWindow::showCompleter(){
     completerLineEdit->move(contextMenu->pos());
     completerLineEdit->show();
     completerLineEdit->setFocus();
+}
+
+void MainWindow::handleCompletion(const QModelIndex &index) {
+    // QStandardItem *item = model->itemFromIndex(index);
+    qInfo() << "Selected option index:"<<index.row();
+    int r=index.row();
+    qInfo() << symbols[r]<<" "<<"qrc"+iconPaths[r];
+    completerLineEdit->hide();
+    emit setMarker(48.149,17.108,"qrc"+iconPaths[r]);
 }

@@ -29,19 +29,23 @@ public:
 private:
     Ui::MainWindow *ui;
     void mousePressEvent(QMouseEvent *event) override;
+    void clicked(const QModelIndex &index);
+
+signals:
+    // void setCenter(QVariant,QVariant);
+    void setMarker(QVariant,QVariant,QVariant);
 
 private slots:
     void showCompleter();
+    void handleCompletion(const QModelIndex &index);
 
 private:
     QMenu *contextMenu;
     QLineEdit *completerLineEdit;
     QCompleter *completer;
-
-    // QStringListModel *model;
-    QListView *completerPopup;
-
     QStandardItemModel *model;
+
+    QListView *completerPopup;
 
 
 };

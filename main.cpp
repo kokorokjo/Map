@@ -1,6 +1,11 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QQuickView>
+#include <QQmlContext>
+#include <QQuickItem>
+#include <QQmlApplicationEngine>
+
 
 int main(int argc, char *argv[])
 {
