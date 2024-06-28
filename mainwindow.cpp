@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     auto obj = ui->quickWidget->rootObject();
     // connect(this,SIGNAL(setCenter(QVariant,QVariant)),obj,SLOT(setCenter(QVariant,QVariant)));
     connect(this,SIGNAL(setMarker(QVariant,QVariant,QVariant)),obj,SLOT(setMarker(QVariant,QVariant,QVariant)));
+    connect(this,SIGNAL(getMousePosition(QVariant,QVariant)),obj,SLOT(getMousePosition(QVariant,QVariant)));
 
     // emit setCenter(48.149,17.108);
 
@@ -84,6 +85,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::RightButton) {
+        emit getMousePosition(QCursor::pos().x(),QCursor::pos().y());
+
         QMenu menu;
         QAction* a1 = menu.addAction(QString("test1"));
         QAction* a2 = menu.addAction(QString("test2"));
@@ -91,7 +94,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
 
 
             qInfo() << "C++ a2 Info Message";
-            contextMenu->exec(event->globalPos());
+            // contextMenu->exec(event->globalPos());
+            showCompleter();
 
 
 

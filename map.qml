@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtLocation 5.15
 import QtPositioning 5.0
 
+
+
 Rectangle{
     id:window
     property double oldLat:48.149
@@ -9,6 +11,13 @@ Rectangle{
     property string oldsrc:"qrc:/Interpreter_Translator_MGRS-Mapper.svg"
     property double mouseX: 0
     property double mouseY: 0
+    property var mouseCoordinates: QtObject {
+            property double latitude: 0
+            property double longitude: 0
+        }
+
+
+
 
     property Component locationMarker: locmarker
 
@@ -25,14 +34,29 @@ Rectangle{
         plugin: mapPlugin
 
     }
-    // function setCenter(lat, lng){
-    //     map.pan(oldLat-lat,oldLng-lng)
-    //     oldLat = lat
-    //     oldLng = lng
+
+
+    // MouseArea {
+    // id: mapViewMouseArea
+    // anchors.fill: parent
     // }
+
+    function getMousePosition(x,y){
+        var mouseLatLon = map.toCoordinate(Qt.point(x-185,y-125));
+        console.log("Mouse clicked at: Latitude " + mouseLatLon.latitude + ", Longitude " + mouseLatLon.longitude);
+        mouseCoordinates.latitude = mouseLatLon.latitude;
+        mouseCoordinates.longitude = mouseLatLon.longitude;
+    }
+
+
+
+
+
+
     function setMarker(lat,lng,src){
+
         var item = locationMarker.createObject(window,{
-                                                coordinate:QtPositioning.coordinate(lat,lng)
+                                                coordinate:QtPositioning.coordinate(mouseCoordinates.latitude,mouseCoordinates.longitude)
                                                 }
                                                 )
         oldsrc=src

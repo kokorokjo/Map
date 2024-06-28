@@ -34,6 +34,7 @@ private:
 signals:
     // void setCenter(QVariant,QVariant);
     void setMarker(QVariant,QVariant,QVariant);
+    void getMousePosition(QVariant,QVariant);
 
 private slots:
     void showCompleter();
