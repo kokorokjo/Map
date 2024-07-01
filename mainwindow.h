@@ -23,6 +23,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+protected:
+    // void contextMenuEvent(QContextMenuEvent *event) override;
 
 
 
@@ -37,8 +39,11 @@ signals:
     void getMousePosition(QVariant,QVariant);
 
 private slots:
+    // void onActionTriggered();
+    void onCompleterActivated(const QString &text);
+
     void showCompleter();
-    void handleCompletion(const QModelIndex &index);
+    // void handleCompletion(const QModelIndex &index);
 
 private:
     QMenu *contextMenu;

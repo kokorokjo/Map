@@ -53,26 +53,27 @@ MainWindow::MainWindow(QWidget *parent)
 
     for(int i=0;i<symbols.size();i++){
         auto col1= new QStandardItem(QIcon(iconPaths[i]),symbols[i]);
-        auto col2= new QStandardItem(symbols[i]);
-        model->appendRow(QList<QStandardItem*>()<<col1<<col2);
+        col1->setData(iconPaths[i],Qt::UserRole + 1);
+        model->appendRow(QList<QStandardItem*>()<<col1);
     }
 
     completer = new QCompleter(this);
     completer-> setModel(model);
     completer-> setModelSorting(QCompleter::CaseSensitivelySortedModel);
+    completer-> setCompletionRole(Qt::DisplayRole);
     completer-> setCaseSensitivity(Qt::CaseInsensitive);
     completer-> setCompletionMode(QCompleter::PopupCompletion);
 
     completerLineEdit->setCompleter(completer);
 
-    connect(completer, QOverload<const QModelIndex &>::of(&QCompleter::activated),
-            this, &MainWindow::handleCompletion);
+    connect(completer, QOverload<const QString &>::of(&QCompleter::activated),
+            this, &MainWindow::onCompleterActivated);
 
-
-    // uplne randomne
-    QAction *chooseSymbolAction = new QAction("Choose Symbol", this);
-    connect(chooseSymbolAction,&QAction::triggered, this, &MainWindow::showCompleter);
-    contextMenu->addAction(chooseSymbolAction);
+    // for (int i = 0; i < model->rowCount(); ++i) {
+    //     QAction *action = new QAction(model->item(i)->text(), this);
+    //     contextMenu->addAction(action);
+    //     connect(action, &QAction::triggered, this, &MainWindow::onActionTriggered);
+    // }
 }
 
 
@@ -80,6 +81,30 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+// void MainWindow::contextMenuEvent(QContextMenuEvent *event) {
+//     contextMenu->exec(event->globalPos());
+// }
+
+
+
+void MainWindow::onCompleterActivated(const QString &text) {
+    QString iconPath;
+    for (int i = 0; i < model->rowCount(); ++i) {
+        QStandardItem *item = model->item(i);
+        if (item->text() == text) {
+            iconPath = item->data(Qt::UserRole + 1).toString();
+            qDebug() << "Completer Selected Text:" << text;
+            qDebug() << "Completer Icon Path:" << iconPath;
+            // Perform additional actions if needed
+            break;
+        }
+    }
+    completerLineEdit->hide();
+    completerLineEdit->clear();
+    emit setMarker(48.149,17.108,"qrc"+iconPath);
+
+}
+
 
 
 
@@ -88,13 +113,12 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
         emit getMousePosition(QCursor::pos().x(),QCursor::pos().y());
 
         QMenu menu;
-        QAction* a1 = menu.addAction(QString("test1"));
+        QAction* a1 = menu.addAction(QString("Add Unit"));
         QAction* a2 = menu.addAction(QString("test2"));
         if(a1 == menu.exec(QCursor::pos())) {
 
 
-            qInfo() << "C++ a2 Info Message";
-            // contextMenu->exec(event->globalPos());
+            // qInfo() << "C++ a2 Info Message";
             showCompleter();
 
 
@@ -103,16 +127,9 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
         else if(a2 == menu.exec(QCursor::pos())) {
             qInfo() << "C++ a1 Info Message";
         }
-        // menu.exec(QCursor::pos());
-        qInfo() << "C++ Style Info Message";
-        qInfo() << event->pos();
+        // qInfo() << "C++ Style Info Message";
+        // qInfo() << event->pos();
         nieco=event->pos();
-        // double y=nieco.y();
-        // double x=nieco.x();
-
-
-
-
 
     }
 
@@ -124,11 +141,35 @@ void MainWindow::showCompleter(){
     completerLineEdit->setFocus();
 }
 
-void MainWindow::handleCompletion(const QModelIndex &index) {
-    // QStandardItem *item = model->itemFromIndex(index);
-    qInfo() << "Selected option index:"<<index.row();
-    int r=index.row();
-    qInfo() << symbols[r]<<" "<<"qrc"+iconPaths[r];
-    completerLineEdit->hide();
-    emit setMarker(48.149,17.108,"qrc"+iconPaths[r]);
-}
+
+// void MainWindow::handleCompletion(const QModelIndex &index) {
+//     // QStandardItem *item = model->itemFromIndex(index);
+//     qInfo() << "Selected option index:"<<index.row();
+//     // QString string=item->data(Qt::UserRole +1).toString();
+//     int r=index.row();
+//     qInfo() << symbols[r]<<" "<<"qrc"+iconPaths[r];
+//     // qInfo()<<string;
+
+
+//     completerLineEdit->hide();
+//     emit setMarker(48.149,17.108,"qrc"+iconPaths[r]);
+// }
+// void MainWindow::onActionTriggered() {
+//     QAction *action = qobject_cast<QAction*>(sender());
+//     if (!action) return;
+
+//     QString selectedText = action->text();
+
+//     for (int i = 0; i < model->rowCount(); ++i) {
+//         QStandardItem *item = model->item(i);
+//         if (item->text() == selectedText) {
+//             QString iconPath = item->data(Qt::UserRole + 1).toString();
+//             qDebug() << "Selected Text:" << selectedText;
+//             qDebug() << "Icon Path:" << iconPath;
+//             // Perform additional actions if needed
+//             break;
+//         }
+//     }
+// }
+
+

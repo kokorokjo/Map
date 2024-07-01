@@ -20,6 +20,7 @@ Rectangle{
 
 
     property Component locationMarker: locmarker
+    property Component obrazok: obr
 
     Plugin{
         id: mapPlugin
@@ -42,7 +43,7 @@ Rectangle{
     // }
 
     function getMousePosition(x,y){
-        var mouseLatLon = map.toCoordinate(Qt.point(x-185,y-125));
+        var mouseLatLon = map.toCoordinate(Qt.point(x-85,y-100));
         console.log("Mouse clicked at: Latitude " + mouseLatLon.latitude + ", Longitude " + mouseLatLon.longitude);
         mouseCoordinates.latitude = mouseLatLon.latitude;
         mouseCoordinates.longitude = mouseLatLon.longitude;
@@ -54,21 +55,21 @@ Rectangle{
 
 
     function setMarker(lat,lng,src){
+        var nieco = obrazok.createObject
+                (locmarker,
+                {source:src}
+                )
+        var item = locationMarker.createObject
+                (window,
+                {coordinate:QtPositioning.coordinate(mouseCoordinates.latitude,mouseCoordinates.longitude),
+                sourceItem:nieco}
+                )
 
-        var item = locationMarker.createObject(window,{
-                                                coordinate:QtPositioning.coordinate(mouseCoordinates.latitude,mouseCoordinates.longitude)
-                                                }
-                                                )
-        oldsrc=src
+
         map.addMapItem(item)
-        console.log("qmlxdd",
-                    map.center)
 
     }
 
-    //get coordinates od mouse
-    //use them in component insted of position
-    //add more markers
     //maybe fix moving qlineEdit maybe + fix clear qlineedit
 
     Component{
@@ -80,10 +81,19 @@ Rectangle{
             coordinate: position
             sourceItem: Image{
                 id:image
-                width: 50
-                height : 50
-                source: oldsrc
+
             }
         }
     }
+    Component{
+        id:obr
+        Image{
+            id:image
+            width: 50
+            height : 50
+            source: oldsrc
+            }
+
+    }
 }
+
