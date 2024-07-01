@@ -1,0 +1,8 @@
+<?xml version="1.0" standalone="no"?>
+<svg data-symbol-info="{&quot;Symbol&quot;:&quot;Armored Track Unit&quot;,&quot;Type&quot;:&quot;Land Unit&quot;,&quot;Affiliation&quot;:&quot;Hostile Templated&quot;,&quot;Echelon&quot;:&quot;Platoon&quot;,&quot;Modifier 2&quot;:&quot;Recovery (Maintenance)&quot;}" height="900" width="900" preserveAspectRatio="xMidYMid" viewBox="24 -3.4999995827674866 152 179.5" xmlns="http://www.w3.org/2000/svg"><desc>
+      Affiliation: Hostile Templated
+      Echelon: platoon
+      Symbol: Armored Track Unit
+      Modifier 1: undefined
+      Modifier 2: Recovery (Maintenance)
+      About: This symbol was created by CPT James Pistell for MGRS-Mapper.com</desc><g class="outline"><path stroke="black" stroke-width="4" d="M 100,28 L172,100 100,172 28,100 100,28 Z" fill="rgb(255,128,128)"></path><path d="M 100,28 L172,100 100,172 28,100 100,28 Z" fill="none" stroke="rgb(239, 239, 239)" stroke-width="5" stroke-dasharray="4,4"></path></g><g class="decorator"><path d="M125,80 C150,80 150,120 125,120 L75,120 C50,120 50,80 75,80 Z" fill="none" stroke="black" stroke-width="4"></path></g><g class="echelon"><path d="M92.5,8a7.5,7.5 0 1,0 15,0a7.5,7.5 0 1,0 -15,0 M62.5,8a7.5,7.5 0 1,0 15,0a7.5,7.5 0 1,0 -15,0 M122.5,8a7.5,7.5 0 1,0 15,0a7.5,7.5 0 1,0 -15,0" fill="black" stroke="black" stroke-width="4"></path></g><g class="mod2"><path d="M77,126 c8,0 8,16 0,16 m6,-8 l35,0 m6,-8 c-8,0 -8,16 0,16" fill="none" stroke="black" stroke-width="3"></path></g></svg>
