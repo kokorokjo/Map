@@ -12,9 +12,10 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QQmlApplicationEngine engine;
 
-    qmlRegisterType<MarkerModel>("com.example.markermodel", 1, 0, "MakerModel");
+    // QQmlApplicationEngine engine;
+
+    qmlRegisterType<MarkerModel>("Marker", 1, 0, "MakerModel");
     MainWindow w;
     w.show();
     return a.exec();

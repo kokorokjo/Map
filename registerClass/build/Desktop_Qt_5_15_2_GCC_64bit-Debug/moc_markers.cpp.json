@@ -1,0 +1,53 @@
+{
+    "classes": [
+        {
+            "className": "Markers",
+            "object": true,
+            "properties": [
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "name": "nieco",
+                    "notify": "niecoChanged",
+                    "read": "nieco",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QPoint",
+                    "user": false,
+                    "write": "setNieco"
+                }
+            ],
+            "qualifiedClassName": "Markers",
+            "signals": [
+                {
+                    "access": "public",
+                    "name": "niecoChanged",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "asi",
+                            "type": "QPoint"
+                        }
+                    ],
+                    "name": "doNieco",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "markers.h",
+    "outputRevision": 67
+}

@@ -62,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
     completer-> setModelSorting(QCompleter::CaseSensitivelySortedModel);
     completer-> setCompletionRole(Qt::DisplayRole);
     completer-> setCaseSensitivity(Qt::CaseInsensitive);
-    completer-> setCompletionMode(QCompleter::PopupCompletion);
+    completer-> setCompletionMode(QCompleter:sortfilterproxymodel.);
 
     completerLineEdit->setCompleter(completer);
 

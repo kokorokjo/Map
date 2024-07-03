@@ -11,7 +11,6 @@ CONFIG += c++17
 CONFIG += qmltypes
 QML_IMPORT_NAME = Marker
 QML_IMPORT_MAJOR_VERSION = 1
-QML_IMPORT_PATH = /home/martin/Qt/5.15.2/gcc_64/QML
 
 INCLUDEPATH += /Sources
 
