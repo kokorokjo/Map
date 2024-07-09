@@ -1,10 +1,13 @@
-#include "markers.h"
 #include "menu.h"
+#include "filehelper.h"
+#include "cursorChanger.h"
 
 #include <QApplication>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+
+
 
 int main(int argc, char *argv[])
 {
@@ -12,11 +15,15 @@ int main(int argc, char *argv[])
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QQmlApplicationEngine engine;
 
-    Markers* myMarker = new Markers();
-    // myGlobal->doSomething("TEXT FROM C++");
+
+    FileHelper fileHelper;
+    CursorChanger cursorChanger;
+
 
     //register classes
-    engine.rootContext()->setContextProperty("markers", myMarker);
+    engine.rootContext()->setContextProperty("fileHelper", &fileHelper);
+    engine.rootContext()->setContextProperty("cursorChanger", &cursorChanger);
+
 
     //custom component
     qmlRegisterType<menu>("com.yourcompany.xyz", 1, 0, "SortFilterProxyModel");
@@ -24,3 +31,4 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
+

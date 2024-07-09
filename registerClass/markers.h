@@ -21,8 +21,6 @@ public:
 private:
     QPoint m_nieco;
 signals:
-    // void setCenter(QVariant,QVariant);
-    // void setMarker(QVariant,QVariant,QVariant);
     void niecoChanged();
 
 };

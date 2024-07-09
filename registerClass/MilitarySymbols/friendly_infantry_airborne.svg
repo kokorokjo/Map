@@ -1,0 +1,8 @@
+<?xml version="1.0" standalone="no"?>
+<svg data-symbol-info="{&quot;Symbol&quot;:&quot;Infantry&quot;,&quot;Type&quot;:&quot;Land Unit&quot;,&quot;Affiliation&quot;:&quot;Friendly&quot;,&quot;Modifier 2&quot;:&quot;Airborne&quot;}" height="900" width="900" preserveAspectRatio="xMidYMid" viewBox="21 46 158 108" xmlns="http://www.w3.org/2000/svg"><desc>
+      Affiliation: Friendly
+      Echelon: undefined
+      Symbol: Infantry
+      Modifier 1: undefined
+      Modifier 2: Airborne
+      About: This symbol was created by CPT James Pistell for MGRS-Mapper.com</desc><g class="outline"><path stroke="black" stroke-width="4" d="M25,50 l150,0 0,100 -150,0 z" fill="rgb(128,224,255)"></path></g><g class="decorator"><path d="M25,50 L175,150 M25,150 L175,50" fill="none" stroke="black" stroke-width="4"></path></g><g class="mod2"><path d="M75,140 C75,125 100,125 100,140 C100,125 125,125 125,140" fill="none" stroke="black" stroke-width="4"></path></g></svg>

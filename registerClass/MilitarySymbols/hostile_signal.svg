@@ -1,0 +1,8 @@
+<?xml version="1.0" standalone="no"?>
+<svg data-symbol-info="{&quot;Symbol&quot;:&quot;Signal&quot;,&quot;Type&quot;:&quot;Land Unit&quot;,&quot;Affiliation&quot;:&quot;Hostile&quot;}" height="900" width="900" preserveAspectRatio="xMidYMid" viewBox="24 24 152 152" xmlns="http://www.w3.org/2000/svg"><desc>
+      Affiliation: Hostile
+      Echelon: undefined
+      Symbol: Signal
+      Modifier 1: undefined
+      Modifier 2: undefined
+      About: This symbol was created by CPT James Pistell for MGRS-Mapper.com</desc><g class="outline"><path stroke="black" stroke-width="4" d="M 100,28 L172,100 100,172 28,100 100,28 Z" fill="rgb(255,128,128)"></path></g><g class="decorator"><path d="M57,70 100,110 100,90 143,130" fill="none" stroke="black" stroke-width="4"></path></g></svg>

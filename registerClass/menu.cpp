@@ -19,11 +19,19 @@ void menu::setFilter(const QString &filter)
     }
 }
 
+
 bool menu::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     if (m_filter.isEmpty())
         return true;
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-    return sourceModel()->data(index, filterRole()).toString().contains(m_filter, Qt::CaseInsensitive);
+    QString dataString = sourceModel()->data(index, filterRole()).toString();
+
+    QString modifiedFilter = m_filter;
+    QString modifiedDataString = dataString;
+    modifiedFilter.replace('_', ' ');
+    modifiedDataString.replace('_', ' ');
+    return modifiedDataString.contains(modifiedFilter, Qt::CaseInsensitive);
+    // return sourceModel()->data(index, filterRole()).toString().contains(m_filter, Qt::CaseInsensitive);
 }
