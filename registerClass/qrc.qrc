@@ -4,6 +4,9 @@
         <file>friendly_air_defense.svg</file>
         <file>trash.svg</file>
         <file>dragIcon.png</file>
+        <file>dragIndicator.svg</file>
+        <file>resize.svg</file>
+        <file>resize1.svg</file>
     </qresource>
     <qresource prefix="/Images">
         <file>MilitarySymbols/friendly_ambulance.svg</file>

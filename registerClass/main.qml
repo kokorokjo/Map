@@ -20,9 +20,6 @@ Window {
     property Component locationMarker: locmarker
     property Component obrazok: obr
     property var svgFiles: []
-    property var itemiky:[]
-    property var nazvy:[]
-    property int pocitadlo:0
     property bool mazat:false
     property bool beforeMove:false
     id: root
@@ -39,13 +36,14 @@ Window {
             id: mapPlugin
             name: "osm"
         }
-        property int asi:1
         Map{
             id: map
             anchors.fill: parent
             zoomLevel: 10
             center: QtPositioning.coordinate(oldLat,oldLng);
             plugin: mapPlugin
+            onWidthChanged: map.prefetchData()
+            onHeightChanged: map.clearData()
 
             MouseArea{
                 id: mapViewMouseArea
@@ -90,9 +88,16 @@ Window {
                             }
                         }
                         GridView {
+                            ScrollBar.vertical: ScrollBar {
+                                    visible: true
+                            }
+                            cacheBuffer:400
+                            // snapMode: GridView.SnapToRow
                             Layout.alignment: Qt.AlignTop
-                            height: popup.height-240
+                            // Layout.alignment: Qt.AlignVCenter
+                            height: popup.height-80
                             Layout.fillWidth: true
+                            clip: true
 
                             id: gridView
                             model: fileFilter
@@ -124,26 +129,31 @@ Window {
                                 }
                             }
                         }
+
+
                     }
 
                     //resize
                     MouseArea {
-                                height: 10
-                                width: 10
-                                anchors.left: parent.right
-                                anchors.top: parent.bottom
+                                height: 15
+                                width: 15
+                                anchors.horizontalCenter : parent.right
+                                anchors.verticalCenter : parent.bottom
 
-                                Rectangle {
+                                // Rectangle {
+                                //     anchors.fill: parent
+                                //     color: "blue"
+                                // }
+                                Image{
                                     anchors.fill: parent
-                                    color: "grey"
+                                    source: "qrc:/resize1.svg"
                                 }
 
                                 property real startX: 0
                                 property real startY: 0
                                 property real startWidth: 0
                                 property real startHeight: 0
-                                // item2.x =QtPositioning.coordinate(deltaX);
-                                // item2.y =QtPositioning.coordinate(deltaY);
+
                                 onPressed: {
                                     var pos = mapToItem(root.contentItem, mouseX, mouseY)
                                     startX = pos.x;
@@ -156,7 +166,6 @@ Window {
                                 function fnc_updatePos() {
                                     if (pressed) {
                                         var pos = mapToItem(root.contentItem, mouseX, mouseY)
-                                        //console.log(pos)
                                         var deltaX = pos.x-startX;
                                         var deltaY = pos.y-startY;
                                         popup.width = startWidth + deltaX;
@@ -177,14 +186,15 @@ Window {
                     //move popup
                     MouseArea {
                                 height: 10
-                                width: 100
+                                width: parent.width
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 anchors.bottom: parent.top
 
                                 Rectangle {
                                     anchors.fill: parent
-                                    color: "grey"
+                                    color: "#D3D3D3"
                                 }
+
 
                                 property real startX: popup.x
                                 property real startY: popup.y
@@ -199,7 +209,6 @@ Window {
 
                                     if (pressed) {
                                         var pos = mapToItem(root.contentItem, mouseX, mouseY)
-                                        //console.log(pos)
                                         var deltaX =startX+ pos.x;
                                         var deltaY =startY+ pos.y;
                                         popup.x =deltaX;
@@ -250,14 +259,12 @@ Window {
                     if (mazat===false){
                         stvorcekTrash.visible = true
                         mazat=true
-                        console.log("a")
                         cursorChanger.changeCursorShape("delete")
 
                     }
                     else{
                         stvorcekTrash.visible = false
                         mazat=false
-                        console.log("b")
                         cursorChanger.changeCursorShape("default")
 
                     }
@@ -285,14 +292,12 @@ Window {
                     if (beforeMove===false){
                         stvorcekDrag.visible = true
                         beforeMove=true
-                        console.log("c")
                         cursorChanger.changeCursorShape("beforeMove")
 
                     }
                     else{
                         stvorcekDrag.visible = false
                         beforeMove=false
-                        console.log("d")
                         cursorChanger.changeCursorShape("default")
 
                     }
@@ -317,11 +322,8 @@ Window {
                     )
 
             popup.close()
-            itemiky.push(item)
             knizka[Object.keys(knizka).length]=item
-            console.log(Object.keys(knizka).length)
             map.addMapItem(item)
-            pocitadlo+=1
         }
 
         Component{
