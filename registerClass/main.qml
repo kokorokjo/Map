@@ -5,6 +5,7 @@ import QtLocation 5.15
 import QtPositioning 5.0
 import com.yourcompany.xyz 1.0
 import QtQuick.Controls 2.15
+import QtTest 1.2
 
 
 Window {
@@ -29,7 +30,16 @@ Window {
     title: "map"
 
 
+Timer{
+    id: deleter
+    objectName: "1"
+    interval: 10; running: false; repeat: false
+    onTriggered:{
+        var item = knizka[deleter.objectName-1]
+        map.removeMapItem(item)
+        }
 
+}
 
 
         Plugin{
@@ -42,8 +52,30 @@ Window {
             zoomLevel: 10
             center: QtPositioning.coordinate(oldLat,oldLng);
             plugin: mapPlugin
-            onWidthChanged: map.prefetchData()
-            onHeightChanged: map.clearData()
+            focus: true
+
+            onHeightChanged: {
+                resizeBugTimer.restart();
+            }
+
+            onWidthChanged: {
+                resizeBugTimer.restart();
+            }
+
+            Timer {
+                id: resizeBugTimer
+                interval: 10
+                repeat: false
+                running: false
+                onTriggered: {
+                    map.fixPositionOnResizeBug();
+                }
+            }
+
+            function fixPositionOnResizeBug() {
+                pan(1, 1);
+                pan(-1, -1);
+            }
 
             MouseArea{
                 id: mapViewMouseArea
@@ -55,6 +87,10 @@ Window {
                     mY=mouseY
                     var mouseLatLon = map.toCoordinate(Qt.point(mouseX-25,mouseY-25))
                     searchField.clear()
+                    popup.width=600
+                    popup.height=400
+                    popup.x=mX
+                    popup.y=mY
                     popup.open()
                     mouseCoordinates.latitude = mouseLatLon.latitude;
                     mouseCoordinates.longitude = mouseLatLon.longitude;
@@ -92,11 +128,11 @@ Window {
                                     visible: true
                             }
                             cacheBuffer:400
-                            // snapMode: GridView.SnapToRow
-                            Layout.alignment: Qt.AlignTop
-                            // Layout.alignment: Qt.AlignVCenter
                             height: popup.height-80
+                            Layout.alignment: Qt.AlignTop
+                            Layout.topMargin: 0
                             Layout.fillWidth: true
+                            Layout.fillHeight: true
                             clip: true
 
                             id: gridView
@@ -129,8 +165,6 @@ Window {
                                 }
                             }
                         }
-
-
                     }
 
                     //resize
@@ -139,11 +173,6 @@ Window {
                                 width: 15
                                 anchors.horizontalCenter : parent.right
                                 anchors.verticalCenter : parent.bottom
-
-                                // Rectangle {
-                                //     anchors.fill: parent
-                                //     color: "blue"
-                                // }
                                 Image{
                                     anchors.fill: parent
                                     source: "qrc:/resize1.svg"
@@ -182,7 +211,6 @@ Window {
 
                                 onPositionChanged: fnc_updatePos()
                             }
-
                     //move popup
                     MouseArea {
                                 height: 10
@@ -252,10 +280,8 @@ Window {
                 }
 
                 onPressed: {
-                    if(beforeMove===false){
-
-
-
+                    beforeMove=false
+                    stvorcekDrag.visible=false
                     if (mazat===false){
                         stvorcekTrash.visible = true
                         mazat=true
@@ -269,7 +295,7 @@ Window {
 
                     }
 
-                }
+
                 }
             }
             MouseArea{
@@ -286,8 +312,10 @@ Window {
                     anchors.fill: parent
                     source: "dragIcon.png"
                 }
+
                 onPressed: {
-                    if(mazat===false){
+                    mazat=false
+                    stvorcekTrash.visible=false
 
                     if (beforeMove===false){
                         stvorcekDrag.visible = true
@@ -301,7 +329,7 @@ Window {
                         cursorChanger.changeCursorShape("default")
 
                     }
-                    }
+
 
                 }
             }
@@ -324,6 +352,7 @@ Window {
             popup.close()
             knizka[Object.keys(knizka).length]=item
             map.addMapItem(item)
+
         }
 
         Component{
@@ -345,15 +374,19 @@ Window {
                     hoverEnabled: true
                     drag.target: map
                     onClicked: {
-                        robim(markerImg.objectName)
+                        if(mazat===true){
+                            deleter.objectName=markerImg.objectName
+                            deleter.start()
+                        }
                     }
                     onPressed: {
                         if(beforeMove===true){
-                            drag.target=parent
+                            drag.target= parent
                         }
                         else{
                             drag.target= map
                         }
+
                     }
                 }
             }
@@ -368,13 +401,6 @@ Window {
                 }
         }
 
-        //function for delete marker
-        function robim(a){
-            if(mazat===true){
-                var item = knizka[a-1]
-                map.removeMapItem(item)
-            }
-        }
 
 
 
@@ -383,10 +409,8 @@ Window {
             ListElement { displayName: "friendly\nair\ndefense"; iconSource: "qrc:/friendly_air_defense.svg" }
 
             Component.onCompleted: {
-                // console.log("asdsa")
                     svgFiles = fileHelper.listSvgFiles("/Images/MilitarySymbols");
                     for (var i = 0; i < svgFiles.length; i++) {
-                        // console.log(svgFiles[i])
                         var name=svgFiles[i]
                         var nameA=name.slice(23,name.length-4)
                         var side=nameA.slice(0,nameA.search("_"))

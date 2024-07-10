@@ -1,8 +1,0 @@
-<?xml version="1.0" standalone="no"?>
-<svg data-symbol-info="{&quot;Symbol&quot;:&quot;Interpreter/Translator&quot;,&quot;Type&quot;:&quot;Land Unit&quot;,&quot;Affiliation&quot;:&quot;Neutral&quot;}" height="900" width="900" preserveAspectRatio="xMidYMid" viewBox="41 41 118 118" xmlns="http://www.w3.org/2000/svg"><desc>
-      Affiliation: Neutral
-      Echelon: undefined
-      Symbol: Interpreter/Translator
-      Modifier 1: undefined
-      Modifier 2: undefined
-      About: This symbol was created by CPT James Pistell for MGRS-Mapper.com</desc><g class="outline"><path stroke="black" stroke-width="4" d="M45,45 l110,0 0,110 -110,0 z" fill="rgb(170, 255, 170)"></path></g><g class="decorator"><path d="m 65,90 15,0 0,-10 20,20 -20,20 0,-10 -15,0 z" fill="rgb(239,239,239)" stroke="black" stroke-width="4"></path><path d="m 135,90 -15,0 0,-10 -20,20 20,20 0,-10 15,0 z" fill="black" stroke="black" stroke-width="4"></path></g></svg>

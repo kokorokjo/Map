@@ -29,6 +29,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<menu>("com.yourcompany.xyz", 1, 0, "SortFilterProxyModel");
     engine.load(url);
 
+
+
     return app.exec();
 }
 
